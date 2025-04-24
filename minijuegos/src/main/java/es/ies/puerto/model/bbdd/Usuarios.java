@@ -33,7 +33,6 @@ public class Usuarios {
         }
 
         usuarios = bbdd.getAllData(path);
-        System.out.println(usuarios);
         bbdd.closeConnection();
     }
 
@@ -52,7 +51,6 @@ public class Usuarios {
             return false;
         }
         Usuario buscado = new Usuario(Password, nombre);
-        System.out.println(buscado);
         for (Usuario usuario : usuarios) {
             if (usuario.equals(buscado)) {
 
