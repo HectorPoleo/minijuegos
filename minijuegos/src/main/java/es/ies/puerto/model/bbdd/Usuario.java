@@ -10,7 +10,7 @@ public class Usuario{
     private String email;
     private Integer id;
     private String nombre;
-    private String Password;
+    private String password;
     private int nivelActual;
     private int victoriasTotales;
     private int derrotasTotales;
@@ -25,8 +25,8 @@ public class Usuario{
     public Usuario() {
     }
 
-    public Usuario(String Password, String nombre) {
-        this.Password = Password;
+    public Usuario(String password, String nombre) {
+        this.password = password;
         this.nombre = nombre;
     }
 
@@ -34,13 +34,13 @@ public class Usuario{
      * Constructor con parametros
      * @param email
      * @param nombre
-     * @param Password
+     * @param password
      */
-    public Usuario(Integer id, String email, String nombre, String Password) {
+    public Usuario(Integer id, String nombre, String email, String password) {
         this.id = id;
         this.email = email;
         this.nombre = nombre;
-        this.Password = Password;
+        this.password = password;
         this.nivelActual = 1;
         this.victoriasTotales = 0;
         this.derrotasTotales = 0;
@@ -50,11 +50,11 @@ public class Usuario{
         this.rachaActual = 0;
     }
 
-    public Usuario(String email, String nombre, String Password) {
+    public Usuario(String nombre, String password, String email) {
         this.id = id;
         this.email = email;
         this.nombre = nombre;
-        this.Password = Password;
+        this.password = password;
         this.nivelActual = 1;
         this.victoriasTotales = 0;
         this.derrotasTotales = 0;
@@ -80,12 +80,12 @@ public class Usuario{
         this.nombre = nombre;
     }
 
-    public String getPassword() {
-        return this.Password;
+    public String getpassword() {
+        return this.password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setpassword(String password) {
+        this.password = password;
     }
 
     public int getNivelActual() {
@@ -199,7 +199,7 @@ public class Usuario{
         return
              getEmail() +
             "," + getNombre() +
-            "," + getPassword() + ","
+            "," + getpassword() + ","
              + getId();
     }
 

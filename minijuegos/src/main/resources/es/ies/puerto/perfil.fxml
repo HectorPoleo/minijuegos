@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="533.0" prefWidth="353.0" spacing="20.0" style="-fx-background-color: lightblue; -fx-border-color: gold; -fx-border-width: 6;" stylesheets="@../../../images/image5.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ies.puerto.controller.PerfilController">
+<VBox alignment="CENTER" prefHeight="533.0" prefWidth="353.0" spacing="20.0" style="-fx-background-color: lightblue; -fx-border-color: gold; -fx-border-width: 6;" stylesheets="@../../../images/image5.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.ies.puerto.controller.PerfilController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -16,10 +16,10 @@
    <Text fx:id="nameText" fill="WHITE" text=" " />
    <TextField fx:id="nombreTextFiled" promptText="nombre" />
    <Text fx:id="welcomeText1" fill="WHITE" text="Password:" />
-   <Text fx:id="emailText" fill="WHITE" text=" " />
+   <Text fx:id="passwordText" fill="WHITE" text=" " />
    <PasswordField fx:id="passwordTextField" promptText="password" />
    <Text fx:id="welcomeText111" fill="WHITE" text="Email:" />
-   <Text fx:id="passwordText" text=" " />
+   <Text fx:id="emailText" fill="WHITE" text=" " />
    <TextField fx:id="emailTextFiled" promptText="email" />
     <Button fx:id="saveChangesButton" alignment="TOP_CENTER" onAction="#saveChanges" prefHeight="26.0" prefWidth="163.0" style="-fx-background-color: gray; -fx-border-color: black;" text="Guardar Cambios" textAlignment="CENTER" />
    <Text fx:id="mensaje" text=" " />

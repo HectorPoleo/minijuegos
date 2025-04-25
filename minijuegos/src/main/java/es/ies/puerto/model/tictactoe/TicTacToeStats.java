@@ -9,7 +9,7 @@ public class TicTacToeStats {
     private int puntuacionTotal;
     private int rachaActual;
     private int rachaMaxima;
-    
+
     public TicTacToeStats() {
         this.partidasTotales = 0;
         this.partidasGanadas = 0;
@@ -19,7 +19,7 @@ public class TicTacToeStats {
         this.rachaActual = 0;
         this.rachaMaxima = 0;
     }
-    
+
     public TicTacToeStats(String userEmail) {
         this();
         this.userEmail = userEmail;
@@ -28,16 +28,16 @@ public class TicTacToeStats {
     /**
      * Actualiza las estadísticas según el resultado del juego
      * @param victoria True si el usuario ganó
-     * @param empate True si hubo empate
+     * @param empate   True si hubo empate
      */
     public void actualizarEstadisticas(boolean victoria, boolean empate) {
         partidasTotales++;
-        
+
         if (victoria) {
             partidasGanadas++;
             rachaActual++;
             puntuacionTotal += 3; // 3 puntos por victoria
-            
+
             if (rachaActual > rachaMaxima) {
                 rachaMaxima = rachaActual;
             }
@@ -50,68 +50,68 @@ public class TicTacToeStats {
             rachaActual = 0; // Se reinicia la racha al perder
         }
     }
-    
+
     // Getters y setters
     public String getUserEmail() {
         return userEmail;
     }
-    
+
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
-    
+
     public int getPartidasTotales() {
         return partidasTotales;
     }
-    
+
     public void setPartidasTotales(int partidasTotales) {
         this.partidasTotales = partidasTotales;
     }
-    
+
     public int getPartidasGanadas() {
         return partidasGanadas;
     }
-    
+
     public void setPartidasGanadas(int partidasGanadas) {
         this.partidasGanadas = partidasGanadas;
     }
-    
+
     public int getPartidasEmpatadas() {
         return partidasEmpatadas;
     }
-    
+
     public void setPartidasEmpatadas(int partidasEmpatadas) {
         this.partidasEmpatadas = partidasEmpatadas;
     }
-    
+
     public int getPartidasPerdidas() {
         return partidasPerdidas;
     }
-    
+
     public void setPartidasPerdidas(int partidasPerdidas) {
         this.partidasPerdidas = partidasPerdidas;
     }
-    
+
     public int getPuntuacionTotal() {
         return puntuacionTotal;
     }
-    
+
     public void setPuntuacionTotal(int puntuacionTotal) {
         this.puntuacionTotal = puntuacionTotal;
     }
-    
+
     public int getRachaActual() {
         return rachaActual;
     }
-    
+
     public void setRachaActual(int rachaActual) {
         this.rachaActual = rachaActual;
     }
-    
+
     public int getRachaMaxima() {
         return rachaMaxima;
     }
-    
+
     public void setRachaMaxima(int rachaMaxima) {
         this.rachaMaxima = rachaMaxima;
     }

@@ -98,9 +98,9 @@ public class Usuarios {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Usuario recibirUsuario(String nombre) throws SQLException, ClassNotFoundException {
+    public Usuario recibirUsuario(String nombre, String password) throws SQLException, ClassNotFoundException {
         bbdd = new Bbdd(path);
-        return bbdd.findUsuario(nombre);
+        return bbdd.findUsuario(nombre,password);
     }
 
     /**

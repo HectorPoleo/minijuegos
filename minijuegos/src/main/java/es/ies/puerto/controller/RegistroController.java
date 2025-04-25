@@ -95,10 +95,10 @@ public class RegistroController extends AbstractController {
             return;
         }
 
-        Usuario usuario = new Usuario(textFieldPassword.getText(), textFieldEmail.getText(), textFiledUsuario.getText());
+        Usuario usuario = new Usuario(textFiledUsuario.getText(), textFieldEmail.getText(),textFieldPassword.getText());
         usuarios.aniadir(usuario);
         usuarios = new Usuarios();
-        usuario = usuarios.recibirUsuario(textFiledUsuario.getText());
+        usuario = usuarios.recibirUsuario(textFiledUsuario.getText(), textFieldPassword.getText());
         usuarios.escribir(usuario);
         perfil();
     }

@@ -8,26 +8,28 @@ import java.sql.Statement;
 import es.ies.puerto.model.abtrastas.Conexion;
 
 public class TicTacToeServiceModel extends Conexion {
-    
+
     public TicTacToeServiceModel(String unaRutaArchivoBD) throws SQLException {
         super(unaRutaArchivoBD);
     }
-    
+
     /**
      * Obtiene las estadísticas de un usuario para el Tres en Raya
+     * 
      * @param userEmail Email del usuario
      * @return TicTacToeStats Estadísticas del usuario
      */
     public TicTacToeStats obtenerEstadisticasUsuario(String userEmail) {
         TicTacToeStats stats = new TicTacToeStats(userEmail);
-        
+
         try {
             String sql = "SELECT * FROM tictactoe_stats WHERE user_email = ?";
             PreparedStatement stmt = getConnection().prepareStatement(sql);
             stmt.setString(1, userEmail);
-            
+
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                stats.setUserEmail(rs.getString("user_email"));
                 stats.setPartidasTotales(rs.getInt("partidas_totales"));
                 stats.setPartidasGanadas(rs.getInt("partidas_ganadas"));
                 stats.setPartidasEmpatadas(rs.getInt("partidas_empatadas"));
@@ -45,12 +47,12 @@ public class TicTacToeServiceModel extends Conexion {
                 e.printStackTrace();
             }
         }
-        
         return stats;
     }
-    
+
     /**
      * Actualiza las estadísticas de un usuario para el Tres en Raya
+     * 
      * @param stats Estadísticas a actualizar
      * @return boolean Verdadero si se actualizó correctamente
      * @throws SQLException Error SQL
@@ -58,16 +60,14 @@ public class TicTacToeServiceModel extends Conexion {
     public boolean actualizarEstadisticas(TicTacToeStats stats) throws SQLException {
         // Comprobar si existen estadísticas para este usuario
         TicTacToeStats existentes = obtenerEstadisticasUsuario(stats.getUserEmail());
-        
         try {
             PreparedStatement stmt;
-            
+
             if (existentes.getPartidasTotales() == 0) {
                 // Crear nuevo registro
                 String sql = "INSERT INTO tictactoe_stats (user_email, partidas_totales, partidas_ganadas, " +
-                             "partidas_empatadas, partidas_perdidas, puntuacion_total, racha_actual, racha_maxima) " +
-                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                             
+                        "partidas_empatadas, partidas_perdidas, puntuacion_total, racha_actual, racha_maxima) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 stmt = getConnection().prepareStatement(sql);
                 stmt.setString(1, stats.getUserEmail());
                 stmt.setInt(2, stats.getPartidasTotales());
@@ -80,15 +80,14 @@ public class TicTacToeServiceModel extends Conexion {
             } else {
                 // Actualizar registro existente
                 String sql = "UPDATE tictactoe_stats SET " +
-                             "partidas_totales = ?, " +
-                             "partidas_ganadas = ?, " +
-                             "partidas_empatadas = ?, " +
-                             "partidas_perdidas = ?, " +
-                             "puntuacion_total = ?, " +
-                             "racha_actual = ?, " +
-                             "racha_maxima = ? " +
-                             "WHERE user_email = ?";
-                             
+                        "partidas_totales = ?, " +
+                        "partidas_ganadas = ?, " +
+                        "partidas_empatadas = ?, " +
+                        "partidas_perdidas = ?, " +
+                        "puntuacion_total = ?, " +
+                        "racha_actual = ?, " +
+                        "racha_maxima = ? " +
+                        "WHERE user_email = ?";
                 stmt = getConnection().prepareStatement(sql);
                 stmt.setInt(1, stats.getPartidasTotales());
                 stmt.setInt(2, stats.getPartidasGanadas());
@@ -99,7 +98,6 @@ public class TicTacToeServiceModel extends Conexion {
                 stmt.setInt(7, stats.getRachaMaxima());
                 stmt.setString(8, stats.getUserEmail());
             }
-            
             return stmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,7 +110,7 @@ public class TicTacToeServiceModel extends Conexion {
             }
         }
     }
-    
+
     /**
      * Crea la tabla de estadísticas si no existe
      */
@@ -129,7 +127,7 @@ public class TicTacToeServiceModel extends Conexion {
                     "racha_actual INTEGER DEFAULT 0, " +
                     "racha_maxima INTEGER DEFAULT 0, " +
                     "UNIQUE(user_email))";
-            
+
             Statement stmt = getConnection().createStatement();
             stmt.execute(sql);
             return true;

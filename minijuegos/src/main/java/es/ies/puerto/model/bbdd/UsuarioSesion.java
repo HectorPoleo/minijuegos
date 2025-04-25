@@ -7,7 +7,7 @@ public class UsuarioSesion {
     /**
      * Contructor vacio
      */
-    private UsuarioSesion() {
+    public UsuarioSesion() {
         usuario=new Usuario();
     }
 

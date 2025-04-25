@@ -101,7 +101,7 @@ public class UsuarioServiceModel extends Conexion {
         }
         ArrayList<Usuario> usuarios = obtenerUsuarios();
         String sql = "INSERT  INTO usuario (nombre_usuario,email,contrasenia) VALUES ('" + usuario.getNombre() + "', '"
-                + usuario.getEmail() + "', '" + usuario.getPassword() + "')";
+                + usuario.getEmail() + "', '" + usuario.getpassword() + "')";
 
         if (usuarios.contains(usuario)) {
             return false;
@@ -132,7 +132,7 @@ public class UsuarioServiceModel extends Conexion {
 
         String sql = "UPDATE usuario SET nombre_usuario = '" + usuario.getNombre() + 
                      "', email = '" + usuario.getEmail() + 
-                     "', contrasenia = '" + usuario.getPassword() + "'";
+                     "', contrasenia = '" + usuario.getpassword() + "'";
 
         try {
             PreparedStatement sentencia = getConnection().prepareStatement(sql);
@@ -161,7 +161,7 @@ public class UsuarioServiceModel extends Conexion {
         // Actualizar el registro basado en el email original
         String sql = "UPDATE usuario SET nombre_usuario = '" + usuario.getNombre() + 
                      "', email = '" + usuario.getEmail() + 
-                     "', contrasenia = '" + usuario.getPassword() + 
+                     "', contrasenia = '" + usuario.getpassword() + 
                      "' WHERE email = '" + emailOriginal + "'";
 
         try {

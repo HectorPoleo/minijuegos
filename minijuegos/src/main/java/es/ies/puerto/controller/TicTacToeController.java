@@ -2,6 +2,7 @@ package es.ies.puerto.controller;
 
 import es.ies.puerto.PrincipalApplication;
 import es.ies.puerto.controller.abstractas.AbstractController;
+import es.ies.puerto.model.bbdd.Usuario;
 import es.ies.puerto.model.bbdd.UsuarioSesion;
 import es.ies.puerto.model.tictactoe.TicTacToeGame;
 import es.ies.puerto.model.tictactoe.TicTacToeServiceModel;
@@ -19,29 +20,31 @@ import javafx.stage.Stage;
 public class TicTacToeController extends AbstractController {
     @FXML
     private GridPane gameBoard;
-    
+
     @FXML
     private Label statusLabel;
-    
+
     @FXML
     private Button restartButton;
-    
+
     @FXML
     private Button statsButton;
-    
+
     @FXML
     private Button backButton;
-    
+
     private TicTacToeGame game;
     private Button[][] buttons;
     private MiniMaxAlgorithm ai;
-    
+    private Usuario usuarioActual;
+
     @FXML
     public void initialize() {
         game = new TicTacToeGame();
         ai = new MiniMaxAlgorithm(game);
         buttons = new Button[3][3];
-        
+        usuarioActual = UsuarioSesion.getInstancia().getUsuario();
+
         // Inicializa el tablero de botones
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -49,28 +52,28 @@ public class TicTacToeController extends AbstractController {
                 button.setMinSize(80, 80);
                 button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
                 button.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
-                
+
                 final int row = i;
                 final int col = j;
-                
+
                 button.setOnAction(event -> handleButtonClick(row, col));
-                
+
                 gameBoard.add(button, j, i);
                 buttons[i][j] = button;
             }
         }
-        
+
         updateUI();
     }
-    
+
     private void handleButtonClick(int row, int col) {
         if (game.isGameOver() || game.getCurrentPlayer() != TicTacToeGame.PLAYER_X) {
             return;
         }
-        
+
         if (game.makeMove(row, col)) {
             updateUI();
-            
+
             // Si el juego no ha terminado, la IA hace su movimiento
             if (!game.isGameOver()) {
                 // Pequeña pausa para que la IA parezca que está "pensando"
@@ -87,22 +90,22 @@ public class TicTacToeController extends AbstractController {
             }
         }
     }
-    
+
     private void makeAIMove() {
         if (!game.isGameOver()) {
             int[] bestMove = ai.findBestMove();
             game.makeMove(bestMove[0], bestMove[1]);
             updateUI();
-            
+
             if (game.isGameOver()) {
                 handleGameOver();
             }
         }
     }
-    
+
     private void updateUI() {
         char[][] board = game.getBoard();
-        
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == TicTacToeGame.PLAYER_X) {
@@ -114,7 +117,7 @@ public class TicTacToeController extends AbstractController {
                 }
             }
         }
-        
+
         if (game.isGameOver()) {
             if (game.isDraw()) {
                 statusLabel.setText("¡Empate!");
@@ -134,30 +137,30 @@ public class TicTacToeController extends AbstractController {
             }
         }
     }
-    
-    private void handleGameOver(){
+
+    private void handleGameOver() {
         boolean victoria = game.getWinner() == TicTacToeGame.PLAYER_X;
         boolean empate = game.isDraw();
-        
+
         try {
             // Obtener el email del usuario actual
-            String userEmail = UsuarioSesion.getInstancia().getUsuario().getEmail();
-            
+            String userEmail =usuarioActual.getEmail();
+
             // Usar la misma ruta de base de datos que el resto de la aplicación
-            String dbPath = PATH_DB;  // Esta variable está definida en AbstractController
-            
+            String dbPath = PATH_DB; // Esta variable está definida en AbstractController
+
             // Crear una conexión a la BD
             TicTacToeServiceModel serviceModel = new TicTacToeServiceModel(dbPath);
-            
+
             // Asegurarnos que la tabla existe
             serviceModel.crearTablaEstadisticas();
-            
+
             // Obtener las estadísticas actuales
             TicTacToeStats stats = serviceModel.obtenerEstadisticasUsuario(userEmail);
-            
+            stats.setUserEmail(userEmail);
             // Actualizar las estadísticas según el resultado
             stats.actualizarEstadisticas(victoria, empate);
-            
+
             // Guardar las estadísticas actualizadas
             if (!serviceModel.actualizarEstadisticas(stats)) {
                 System.err.println("Error al guardar las estadísticas");
@@ -169,13 +172,13 @@ public class TicTacToeController extends AbstractController {
             System.err.println("Error al actualizar las estadísticas: " + e.getMessage());
         }
     }
-    
+
     @FXML
     private void onRestartClick() {
         game.reset();
         updateUI();
     }
-    
+
     @FXML
     private void onStatsClick() {
         try {
@@ -189,7 +192,7 @@ public class TicTacToeController extends AbstractController {
             e.printStackTrace();
         }
     }
-    
+
     @FXML
     private void onBackClick() {
         try {

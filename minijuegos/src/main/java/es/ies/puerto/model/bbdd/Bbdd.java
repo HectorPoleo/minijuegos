@@ -41,8 +41,8 @@ public class Bbdd{
         String qry = "INSERT INTO usuario (nombre, contrasenia, email) VALUES (?, ?, ?)";
         try (PreparedStatement st = con.prepareStatement(qry)) {
             st.setString(1, usuario.getNombre());
-            st.setString(2, usuario.getPassword());
-            st.setString(3, usuario.getEmail());
+            st.setString(3, usuario.getpassword());
+            st.setString(2, usuario.getEmail());
             st.executeUpdate();
         }
     }
@@ -56,7 +56,7 @@ public class Bbdd{
         String qry = "UPDATE usuario SET nombre=?, contrasenia=?, email=? WHERE ID=?";
         try (PreparedStatement st = con.prepareStatement(qry)) {
             st.setString(1, usuario.getNombre());
-            st.setString(2, usuario.getPassword());
+            st.setString(2, usuario.getpassword());
             st.setString(3, usuario.getEmail());
             st.setInt(4, usuario.getId());
             st.executeUpdate();
@@ -112,9 +112,9 @@ public class Bbdd{
      * @return
      * @throws SQLException
      */
-    public Usuario findUsuario(String nombre) throws SQLException{
+    public Usuario findUsuario(String nombre,String passsword) throws SQLException{
         Usuario usuario=new Usuario();
-        PreparedStatement sentencia=con.prepareStatement("select * from usuario where nombre='"+nombre+"'");
+        PreparedStatement sentencia=con.prepareStatement("select * from usuario where nombre='"+nombre+"'AND contrasenia='"+passsword+"'");
         ResultSet resultSet=sentencia.executeQuery();
         while (resultSet.next()) {
             int id=resultSet.getInt("id");
@@ -122,7 +122,9 @@ public class Bbdd{
             String password=resultSet.getString("contrasenia");
             String email=resultSet.getString("email");
             usuario=new Usuario(id, password, email, nombreSearch);
+            
         }
+        System.out.println(usuario);
         return usuario;
     }
 

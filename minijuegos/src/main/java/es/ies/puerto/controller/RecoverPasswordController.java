@@ -55,7 +55,7 @@ public class RecoverPasswordController extends AbstractController {
             return;
         }
         Usuario usuario=usuarios.darUsuarioPorEmail(filedEmail.getText());
-        textMensaje.setText("Su contraseña es "+usuario.getPassword());
+        textMensaje.setText("Su contraseña es "+usuario.getpassword());
     }
     /**
      * Metodo que permite volver al login

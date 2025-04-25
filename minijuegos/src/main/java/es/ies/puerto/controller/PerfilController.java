@@ -66,7 +66,7 @@ public class PerfilController extends AbstractController {
         }
         usuario = usuarios.leer();
         nameText.setText(usuario.getNombre());
-        passwordText.setText(usuario.getPassword());
+        passwordText.setText(usuario.getpassword());
         emailText.setText(usuario.getEmail());
     }
 
@@ -82,7 +82,7 @@ public class PerfilController extends AbstractController {
      */
     @FXML
     protected void saveChanges() throws SQLException, ClassNotFoundException {
-        String password = usuario.getPassword();
+        String password = usuario.getpassword();
         String email = usuario.getEmail();
         String name = usuario.getNombre();
         if (nombreTextFiled == null || nombreTextFiled.getText().isBlank()) {

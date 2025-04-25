@@ -8,6 +8,7 @@ import java.util.List;
 import es.ies.puerto.PrincipalApplication;
 import es.ies.puerto.controller.abstractas.AbstractController;
 import es.ies.puerto.model.bbdd.Usuario;
+import es.ies.puerto.model.bbdd.UsuarioSesion;
 import es.ies.puerto.model.bbdd.Usuarios;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
  */
 public class LoginController extends AbstractController {
     
-
+    UsuarioSesion usuarioSesion = new UsuarioSesion();
     Usuarios usuarios;
 
     @FXML
@@ -84,29 +85,29 @@ public class LoginController extends AbstractController {
         textUsuario.setText(getPropertiesIdioma().getProperty("textUsuario"));
         textContrasenia.setText(getPropertiesIdioma().getProperty("textContrasenia"));
     }
-      /**
+    /**
      * Metodo que permite iniciar sesion
      */
     @FXML
     protected void onLoginButtonClick() throws SQLException, ClassNotFoundException {
 
-        if (textFieldUsuario== null || textFieldUsuario.getText().isEmpty() || 
+        if (textFieldUsuario== null || textFieldUsuario.getText().isEmpty() ||
             textFieldPassword == null || textFieldPassword.getText().isEmpty() ) {
                 textFieldMensaje.setText("Credenciales null o vacias");
                 return;
         }
-        if (usuarios.recibirUsuario(textFieldUsuario.getText()).getEmail()!=null) {
+        if (usuarios.recibirUsuario(textFieldUsuario.getText(), textFieldPassword.getText()).getEmail()!=null) {
             textFieldMensaje.setText("Usuario validado correctamente");
-            Usuario usuario=new Usuario(textFieldPassword.getText(), textFieldUsuario.getText());
-            usuario=usuarios.recibirUsuario(textFieldUsuario.getText());
+            Usuario usuario =new Usuario(textFieldPassword.getText(), textFieldUsuario.getText());
+            usuarioSesion.setUsuario( usuarios.recibirUsuario(textFieldUsuario.getText(), textFieldPassword.getText()));
             try {
-                usuarios.escribir(usuario);
+                usuarios.escribir(usuarioSesion.getUsuario());
                 perfil();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return;
-        } 
+        }
 
         textFieldMensaje.setText("Credenciales invalidas");
     }
