@@ -1,4 +1,4 @@
-# miniuegos
+# minijuegos
 
 Este repositorio contiene una colección de juegos clásicos desarrollados utilizando **Java** y **JavaFX** como proyecto práctico de aprendizaje.
 
